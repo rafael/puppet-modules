@@ -17,6 +17,7 @@ class apt {
     path => ["/bin", "/usr/bin", "/usr/local/bin"],
     command => "cp preferences preferences.bak",
     creates => "/etc/apt/preferences.bak",
+    require => File["/etc/apt/preferences"],
   }
 
 }
