@@ -1,5 +1,4 @@
 class apt {
-  include apt::update
 
   file { "/etc/apt/preferences":
     ensure => file,
