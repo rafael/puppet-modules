@@ -47,10 +47,10 @@ class rails-machine {
             'libmysqlclient-dev',
             'libmysql-ruby']
 
-  package {$base_packages_names:
+  package {$rails_base_packages:
     ensure => installed,
     require => Class["base"],
   }
 
-  include base,vim, git
+  include base,vim, git, mysql::server
 }
