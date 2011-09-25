@@ -7,9 +7,13 @@ class vim::install {
     # this won't install ruby extensions, that are needed for some plugins
 
     "Ubuntu": {
+      if  $operatingsystemrelease >= 11.04 {
         package { ["vim", "vim-nox"]:
           ensure => latest,
         }
+      } else {
+        default
+      }
     } # End Ubuntu
 
     default: {
