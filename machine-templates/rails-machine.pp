@@ -52,5 +52,5 @@ class rails-machine {
     require => Class["base"],
   }
 
-  include base,vim, git, mysql::server
+  include base,vim, git, mysql::server, bundler
 }
