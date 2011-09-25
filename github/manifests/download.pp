@@ -12,7 +12,7 @@ define github::download($user, $path_to_install, $repo_name, $clone_adress) {
     cwd => $cwd,
     user => $user,
     logoutput => true,
-    command => "git clone $clone_adress $folder_name --recursive"
+    command => "git clone $clone_adress $folder_name --recursive",
     creates => "$path_to_install/$repo_name",
     timeout => 3600,
     require => Class["git::install"],

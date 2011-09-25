@@ -35,9 +35,17 @@ class vim::install {
             require => Exec["download vim"],
     }
 
+    exec { "remove vim default config":
+      cwd => "/tmp/vim73/src/auto",
+          command => "rm config.h",
+          onlyif => "test -e /tmp/vim73/src/auto/config.h",
+          before => Exec["configure vim"],
+          require => Exec["extract vim"],
+    }
+
     exec { "configure vim":
         cwd => "/tmp/vim73",
-            command => "bash -c './configure --with-features=huge \
+            command => "make clean && bash -c './configure --with-features=huge \
                      --enable-multibyte --enable-rubyinterp \
                      --enable-pythoninterp=yes --disable-netbeans'",
             creates => "/tmp/vim73/src/auto/config.h",
@@ -46,7 +54,7 @@ class vim::install {
 
     exec { "install vim":
         cwd => "/tmp/vim73",
-            command => "make && make install",
+            command => "make clean && make && make install",
             creates => "/usr/local/bin/vim",
             require => Exec["configure vim"],
       }
@@ -82,9 +90,17 @@ class vim::install {
         require => Exec["download vim"],
       }
 
+      exec { "remove vim default config":
+      cwd => "/tmp/vim73/src/auto",
+          command => "rm config.h",
+          onlyif => "test -e /tmp/vim73/src/auto/config.h",
+          before => Exec["configure vim"],
+          require => Exec["extract vim"],
+      }
+
       exec { "configure vim":
         cwd => "/tmp/vim73",
-        command => "bash -c './configure --with-features=huge \
+        command => "make clean && bash -c './configure --with-features=huge \
 --enable-multibyte --enable-rubyinterp \
 --enable-pythoninterp=yes --disable-netbeans'",
         creates => "/tmp/vim73/src/auto/config.h",
@@ -93,7 +109,7 @@ class vim::install {
 
       exec { "install vim":
         cwd => "/tmp/vim73",
-        command => "make && make install",
+        command => "make clean  && make && make install",
         creates => "/usr/local/bin/vim",
         require => Exec["configure vim"],
       }
