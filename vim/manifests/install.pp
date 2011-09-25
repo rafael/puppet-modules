@@ -35,34 +35,20 @@ class vim::install {
             require => Exec["download vim"],
     }
 
-    exec { "remove vim default config":
-        cwd => "/tmp/vim73/src/auto",
-            command => "rm config.h",
-            onlyif => "test -e /tmp/vim73/src/auto/config.h",
-            before => Exec["configure vim"],
-            require => Exec["extract vim"],
-      }
-
-      exec { "configure vim":
+    exec { "configure vim":
         cwd => "/tmp/vim73",
             command => "bash -c './configure --with-features=huge \
                      --enable-multibyte --enable-rubyinterp \
                      --enable-pythoninterp=yes --disable-netbeans'",
             creates => "/tmp/vim73/src/auto/config.h",
             require => Exec["extract vim"],
-      }
+    }
 
-      exec { "install vim":
+    exec { "install vim":
         cwd => "/tmp/vim73",
             command => "make && make install",
             creates => "/usr/local/bin/vim",
             require => Exec["configure vim"],
-      }
-
-      exec { "clean vim installation":
-        cwd => "/tmp",
-            command => "rm -rf vim73 && rm vim-7.3.tar.bz2",
-            require => Exec["install vim"],
       }
     }
   } # End Ubuntu
@@ -96,14 +82,6 @@ class vim::install {
         require => Exec["download vim"],
       }
 
-      exec { "remove vim default config":
-        cwd => "/tmp/vim73/src/auto",
-        command => "rm config.h",
-        onlyif => "test -e /tmp/vim73/src/auto/config.h",
-        before => Exec["configure vim"],
-        require => Exec["extract vim"],
-      }
-
       exec { "configure vim":
         cwd => "/tmp/vim73",
         command => "bash -c './configure --with-features=huge \
@@ -118,12 +96,6 @@ class vim::install {
         command => "make && make install",
         creates => "/usr/local/bin/vim",
         require => Exec["configure vim"],
-      }
-
-      exec { "clean vim installation":
-        cwd => "/tmp",
-        command => "rm -rf vim73 && rm vim-7.3.tar.bz2",
-        require => Exec["install vim"],
       }
 
     } # end default
