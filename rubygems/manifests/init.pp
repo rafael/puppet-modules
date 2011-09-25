@@ -3,7 +3,8 @@ class rubygems($version ='1.8.10'){
   Exec{
     path => ["/usr/bin/",
              "/bin/",
-             "/opt/ruby/bin/"]
+             "/opt/ruby/bin/"],
+    user => root,
   }
 
   file {"/var/log/puppet/":
