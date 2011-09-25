@@ -15,7 +15,7 @@ define github::download($user, $path_to_install, $repo_name, $clone_adress) {
     command => "git clone $clone_adress $folder_name --recursive \
              && bash -c 'cd $folder_name \
              && git checkout production'",
-    creates => "$cwd/$folder_name",
+    creates => "$path_to_install/$folder_name",
     timeout => 3600,
     require => Class["git::install"],
   }
