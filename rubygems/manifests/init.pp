@@ -18,7 +18,7 @@ class rubygems($version ='1.8.10'){
   case $operatingsystem {
   
     "Debian","Ubuntu": {
-
+      $versionfile = "/tmp/rubygems-version"
       exec {"update-gem-version-$operatingsystem":
         command => "gem install rubygems-update --no-ri --no-rdoc \
                     && bash -c 'cd /var/lib/gems/1.8/bin \
