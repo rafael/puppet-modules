@@ -12,7 +12,7 @@ class rails-machine {
   user { 'ubuntu':
     ensure => present,
            home => '/home/ubuntu',
-           shell => '/bin/sh',
+           shell => '/bin/bash',
   }
 
   file {"/home/ubuntu":
