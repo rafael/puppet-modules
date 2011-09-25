@@ -1,6 +1,6 @@
 define apache::vhost ($port, $docroot, $ssl = true, 
                       $template = 'apache/vhost.conf.erb',
-                      $priority, $serveraliases ='') {
+                      $priority, $serveraliases ='', $rails_env) {
   include apache
   file {"/etc/apache2/sites-enabled/${priority}-${name}": 
     content => template($template), 

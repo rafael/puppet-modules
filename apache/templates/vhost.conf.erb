@@ -15,4 +15,7 @@ NameVirtualHost *:<%= port %>
   LogLevel warn 
   CustomLog /var/log/apache2/<%= name %>_access.log combined 
   ServerSignature On
+  <% unless rails_env.nil? %>
+  RailsEnv <%= rails_env %>
+  <% end %>
 </VirtualHost>
