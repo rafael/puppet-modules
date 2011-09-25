@@ -1,0 +1,14 @@
+##############
+### README ###
+##############
+
+In this folder there are a series of template to set up differents machines for
+developments enviroments. Usually you would put it in your manifests folder in 
+the puppet server and then do something like this in nodes.pp :
+
+import 'rails-machine'
+node mynode.rails-machine {
+
+  include rails-machine
+
+}
