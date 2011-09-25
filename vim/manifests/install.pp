@@ -20,7 +20,7 @@ class vim::install {
         logoutput => true,
       }
 
-      package { "build-essential":
+      package { "build-essential-for-vim":
         ensure => installed,
       }
 
