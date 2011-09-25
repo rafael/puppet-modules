@@ -7,7 +7,7 @@ class vim::install {
     # this won't install ruby extensions, that are needed for some plugins
 
     "Ubuntu": {
-    if versioncmp($operatingsystemrelease, '11.04') < 0 {
+    if versioncmp($operatingsystemrelease, '11.04') >= 0 {
         package { ["vim", "vim-nox"]:
           ensure => latest,
         }
