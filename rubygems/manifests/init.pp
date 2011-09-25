@@ -1,4 +1,4 @@
-class rubygems($version ='1.3.7'){
+class rubygems($version ='1.8.10'){
 
   Exec{
     path => ["/usr/bin/",
@@ -16,7 +16,7 @@ class rubygems($version ='1.3.7'){
 
   case $operatingsystem {
   
-    "Debian": {
+    "Debian","Ubuntu": {
 
       exec {"update-gem-version-$operatingsystem":
         command => "gem install rubygems-update --no-ri --no-rdoc \
@@ -25,28 +25,17 @@ class rubygems($version ='1.3.7'){
                     && gem update --system $version \
                     && echo $version > $versionfile'",
         unless => "test `gem -v 2> /dev/null` = $version",
-	timeout => 3600,
+	      timeout => 3600,
         require => [Package['rubygems'], File['/var/log/puppet/']],
       }
 
-    }
-
-    "Ubuntu": {
-      exec {"update-gem-version-$operatingsystem":
-        command => "REALLY_GEM_UPDATE_SYSTEM=true \
-                    && export REALLY_GEM_UPDATE_SYSTEM
-                    && gem update --system $version",
-        unless => "test `gem -v 2> /dev/null` = $version",
-	timeout => 3600,
-        require => [Package['rubygems'], File['/var/log/puppet/']],
-      }
     }
 
     default: {
       exec {"update-gem-version-$operatingsystem":
         command => "gem update --system $version",
         unless => "test `gem -v 2> /dev/null` = $version",
-	timeout => 3600,
+	      timeout => 3600,
         require => [Package['rubygems'], File['/var/log/puppet/']],
       }
     }
