@@ -1,6 +1,5 @@
 class vim::install {
-  include apt
-
+  include apt, base
   case $operatingsystem {
 
     # This is to install vim from packages, however
@@ -17,29 +16,26 @@ class vim::install {
       $source_url = "ftp://ftp.vim.org/pub/vim/unix/vim-7.3.tar.bz2"
       Exec {
         path => ["/bin", "/usr/bin", "/usr/local/bin", "/opt/ruby/bin"],
+        user => root,
         logoutput => true,
       }
 
-      package { "build-essential-for-vim":
-        ensure => installed,
-      }
-
-      exec { "download vim":
+    exec { "download vim":
         cwd  => "/tmp",
              command => "wget $source_url",
              creates => "/tmp/vim-7.3.tar.bz2",
              unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
              require => Package["build-essential"],
-      }
+    }
 
-      exec { "extract vim":
+    exec { "extract vim":
         cwd => "/tmp",
             command => "tar -xvjf vim-7.3.tar.bz2",
             creates => "/tmp/vim73",
             require => Exec["download vim"],
-      }
+    }
 
-      exec { "remove vim default config":
+    exec { "remove vim default config":
         cwd => "/tmp/vim73/src/auto",
             command => "rm config.h",
             onlyif => "test -e /tmp/vim73/src/auto/config.h",
@@ -77,6 +73,7 @@ class vim::install {
 
       Exec {
         path => ["/bin", "/usr/bin", "/usr/local/bin", "/opt/ruby/bin"],
+        user => root,
         logoutput => true,
       }
 
