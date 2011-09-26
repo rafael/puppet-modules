@@ -31,14 +31,14 @@ class vim::install {
     exec { "extract vim":
         cwd => "/tmp",
             command => "tar -xvjf vim-7.3.tar.bz2",
-            creates => "/tmp/vim73",
+            unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
             require => Exec["download vim"],
     }
 
     exec { "remove vim default config":
       cwd => "/tmp/vim73/src/auto",
           command => "rm config.h",
-          onlyif => "test -e /tmp/vim73/src/auto/config.h",
+          unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
           before => Exec["configure vim"],
           require => Exec["extract vim"],
     }
@@ -48,7 +48,7 @@ class vim::install {
             command => "make clean && bash -c './configure --with-features=huge \
                      --enable-multibyte --enable-rubyinterp \
                      --enable-pythoninterp=yes --disable-netbeans'",
-            creates => "/tmp/vim73/src/auto/config.h",
+            unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
             require => Exec["extract vim"],
     }
 
@@ -56,6 +56,7 @@ class vim::install {
         cwd => "/tmp/vim73",
             command => "make clean && make && make install",
             creates => "/usr/local/bin/vim",
+            unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
             require => Exec["configure vim"],
       }
     }
@@ -86,14 +87,15 @@ class vim::install {
       exec { "extract vim":
         cwd => "/tmp",
         command => "tar -xvjf vim-7.3.tar.bz2",
-        creates => "/tmp/vim73",
+        unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
         require => Exec["download vim"],
       }
 
       exec { "remove vim default config":
       cwd => "/tmp/vim73/src/auto",
           command => "rm config.h",
-          onlyif => "test -e /tmp/vim73/src/auto/config.h",
+          creates => "/tmp/vim73",
+          unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
           before => Exec["configure vim"],
           require => Exec["extract vim"],
       }
@@ -103,14 +105,14 @@ class vim::install {
         command => "make clean && bash -c './configure --with-features=huge \
 --enable-multibyte --enable-rubyinterp \
 --enable-pythoninterp=yes --disable-netbeans'",
-        creates => "/tmp/vim73/src/auto/config.h",
+        unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
         require => Exec["extract vim"],
       }
 
       exec { "install vim":
         cwd => "/tmp/vim73",
         command => "make clean  && make && make install",
-        creates => "/usr/local/bin/vim",
+        unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
         require => Exec["configure vim"],
       }
 
