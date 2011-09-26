@@ -9,7 +9,7 @@ class base-packages {
             'wget',
             'ruby1.8',
             'ruby-dev',
-            'bruby1.8-extras',
+            'libruby1.8-extras',
             ]
 
   package {$base_packages_names:

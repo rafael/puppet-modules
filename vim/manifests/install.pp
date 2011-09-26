@@ -49,7 +49,7 @@ class vim::install {
                      --enable-multibyte --enable-rubyinterp \
                      --enable-pythoninterp=yes --disable-netbeans'",
             unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
-            require => Exec["extract vim"],
+            require => [Class['base'],Exec["extract vim"]],
     }
 
     exec { "install vim":
@@ -106,7 +106,7 @@ class vim::install {
 --enable-multibyte --enable-rubyinterp \
 --enable-pythoninterp=yes --disable-netbeans'",
         unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
-        require => Exec["extract vim"],
+        require => [Class['base'],Exec["extract vim"]],
       }
 
       exec { "install vim":
