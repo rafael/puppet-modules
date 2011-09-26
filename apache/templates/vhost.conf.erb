@@ -17,5 +17,6 @@ NameVirtualHost *:<%= port %>
   ServerSignature On
   <% unless rails_env.nil? %>
   RailsEnv <%= rails_env %>
+  RackEnv <%= rails_env %>
   <% end %>
 </VirtualHost>
