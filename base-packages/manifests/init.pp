@@ -13,6 +13,7 @@ class base-packages {
          '/usr/local/bin'
         ,'/usr/bin'
         ],
+        user => root,
         command => "apt-get update",
     }
   package {$base_packages_names:
