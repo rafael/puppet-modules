@@ -9,10 +9,10 @@ class base-packages {
             'wget',
             'ruby1.8',
             'ruby-dev',
+            'bruby1.8-extras',
             ]
 
   package {$base_packages_names:
     ensure => installed,
-    require => Exec["apt-get-update"],
   }
 }
