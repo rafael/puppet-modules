@@ -1,5 +1,4 @@
 class vim-plugins::install($user) {
-  include git, vim
 
   $repo = "http://github.com/roman/vimconfig"
 
@@ -7,7 +6,6 @@ class vim-plugins::install($user) {
     path => ["/bin", "/usr/bin", "/usr/local/bin"],
     user => $user,
     group => $user,
-    require => Class["git::install", "vim::install"],
   }
 
   exec { "install-vim-config":

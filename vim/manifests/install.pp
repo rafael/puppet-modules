@@ -1,5 +1,5 @@
 class vim::install {
-  include apt
+
   case $operatingsystem {
 
     # This is to install vim from packages, however
