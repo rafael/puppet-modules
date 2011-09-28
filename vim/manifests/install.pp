@@ -25,7 +25,6 @@ class vim::install {
              command => "wget $source_url",
              creates => "/tmp/vim-7.3.tar.bz2",
              unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
-             require => Package["build-essential"],
     }
 
     exec { "extract vim":
@@ -45,16 +44,16 @@ class vim::install {
 
     exec { "configure vim":
         cwd => "/tmp/vim73",
-            command => "make clean && bash -c './configure --with-features=huge \
+            command => "make clean distclean && bash -c './configure --with-features=huge \
                      --enable-multibyte --enable-rubyinterp \
                      --enable-pythoninterp=yes --disable-netbeans'",
             unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
-            require => [Class['base'],Exec["extract vim"]],
+            require => [Class['base-packages'], Exec["extract vim"]],
     }
 
     exec { "install vim":
         cwd => "/tmp/vim73",
-            command => "make clean && make && make install",
+            command => "make && make install",
             creates => "/usr/local/bin/vim",
             unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
             require => Exec["configure vim"],
@@ -81,7 +80,6 @@ class vim::install {
         command => "wget $source_url",
         creates => "/tmp/vim-7.3.tar.bz2",
         unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
-        require => Package["build-essential"],
       }
 
       exec { "extract vim":
@@ -102,16 +100,16 @@ class vim::install {
 
       exec { "configure vim":
         cwd => "/tmp/vim73",
-        command => "make clean && bash -c './configure --with-features=huge \
+        command => "make clean distclean && bash -c './configure --with-features=huge \
 --enable-multibyte --enable-rubyinterp \
 --enable-pythoninterp=yes --disable-netbeans'",
         unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
-        require => [Class['base'],Exec["extract vim"]],
+        require => [Class['base-packages'],Exec["extract vim"]],
       }
 
       exec { "install vim":
         cwd => "/tmp/vim73",
-        command => "make clean  && make && make install",
+        command => "make && make install",
         unless  => "test -s /usr/local/bin/vim && vim --version | head -n1 | grep '7.3'",
         require => Exec["configure vim"],
       }

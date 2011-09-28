@@ -4,12 +4,12 @@
 class base-packages {
   #ruby - dev it's needeed to compile vim
   $base_packages_names = [
+            'ruby',
+            'ruby-dev',
+            'libruby-extras',
             'build-essential',
             'curl',
             'wget',
-            'ruby1.8',
-            'ruby-dev',
-            'libruby1.8-extras',
             ]
 
   package {$base_packages_names:
