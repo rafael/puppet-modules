@@ -8,7 +8,7 @@ define github::download($user, $path_to_install, $repo_name, $clone_adress) {
             , "/usr/bin" ],
   }
 
-  exec {"download-noomii-repo-for-$folder_name":
+  exec {"download-repo-$folder_name":
     cwd => $cwd,
     user => $user,
     logoutput => true,
