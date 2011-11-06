@@ -1,5 +1,5 @@
 class zsh($user="vagrant") {
-  class { "bash::update": 
+  class { "zsh::update": 
     user => $user,
   }
 }
